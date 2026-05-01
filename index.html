@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RESCENE — 리센느</title>
+  <link rel="icon" href="https://cdn.imweb.me/thumbnail/20250630/b0666a1e5ca4e.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Serif+KR:wght@300;400&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    :root {
+      --bg: #f5f3ef;
+      --text: #1a1a18;
+      --muted: #6a6a62;
+      --accent: #9a7d6a;
+      --line: #d8d4ce;
+      --card: #edeae4;
+      --card-hover: #e5e1db;
+      --para: #444440;
+      --disco-track: #4a4a44;
+      --disco-dot: #c0bcb6;
+      --yt-hover-bg: #fff0f0;
+      --yt-hover: #d94040;
+      --today-color: #c07070;
+    }
+
+    html.dark {
+      --bg: #141412;
+      --text: #e8e4de;
+      --muted: #8a8a80;
+      --accent: #b89a84;
+      --line: #2e2c28;
+      --card: #1e1c18;
+      --card-hover: #2a2824;
+      --para: #c8c4be;
+      --disco-track: #b0b0a8;
+      --disco-dot: #3e3c38;
+      --yt-hover-bg: #2a1a1a;
+      --yt-hover: #e07070;
+      --today-color: #d08080;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 300;
+      line-height: 1.75;
+      overflow-x: hidden;
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    
+    header {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 8vw;
+      position: relative;
+      border-bottom: 1px solid var(--line);
+      gap: 4vw;
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .header-img {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+      max-height: 78vh;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.9s;
+      filter: drop-shadow(0 8px 36px rgba(184,168,154,0.25));
+      mix-blend-mode: multiply;
+    }
+
+    @media (max-width: 900px) {
+      header { grid-template-columns: 1fr; }
+      .header-right { display: none; }
+    }
+
+    .header-eyebrow {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 14vw, 12rem);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    h1 .h1-script {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(5rem, 17vw, 14rem);
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      display: block;
+      line-height: 1;
+    }
+
+    h1 .h1-ko {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 5vw, 4rem);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      display: block;
+      margin-top: 0.5rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .header-sub {
+      margin-top: 2.5rem;
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 36ch;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.6s;
+    }
+
+    .header-meta {
+      position: absolute;
+      bottom: 3rem;
+      right: 8vw;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-align: right;
+      line-height: 2;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.8s;
+    }
+
+    
+    section {
+      padding: 8rem 8vw;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-label {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .section-label::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 3rem;
+      background: var(--line);
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 2rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: var(--para);
+      max-width: 62ch;
+      line-height: 1.9;
+    }
+
+    
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .about-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .fact-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--line);
+      gap: 2rem;
+    }
+
+    .fact-row:first-child {
+      border-top: 1px solid var(--line);
+    }
+
+    .fact-key {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 500;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--disco-track);
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .fact-val {
+      font-size: 0.9rem;
+      text-align: right;
+    }
+
+    
+    .members-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 2px;
+      align-items: start;
+    }
+
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2px;
+    }
+
+    .member-photo-panel {
+      position: sticky;
+      top: 6rem;
+      height: 460px;
+      overflow: hidden;
+      background: var(--card);
+      border-radius: 2px 18px 2px 18px;
+      border: 1px solid var(--line);
+      box-shadow:
+        0 0 0 4px var(--bg),
+        0 0 0 6px var(--accent),
+        0 10px 36px -4px rgba(184,168,154,0.30),
+        inset 0 0 24px 0 rgba(245,243,239,0.10);
+    }
+
+    
+    .member-photo-panel::before,
+    .member-photo-panel::after {
+      content: '';
+      position: absolute;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .member-photo-panel::before {
+      top: 12px; left: 12px;
+      width: 28px; height: 28px;
+      border-top: 1.5px solid rgba(184,168,154,0.75);
+      border-left: 1.5px solid rgba(184,168,154,0.75);
+    }
+
+    .member-photo-panel::after {
+      bottom: 12px; right: 12px;
+      width: 28px; height: 28px;
+      border-bottom: 1.5px solid rgba(184,168,154,0.75);
+      border-right: 1.5px solid rgba(184,168,154,0.75);
+    }
+
+    .member-photo-panel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      opacity: 0;
+      transform: scale(1.06);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    .member-photo-panel img.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .member-card {
+      background: var(--card);
+      padding: 2.5rem 2rem 8.5rem 2rem;
+      position: relative;
+      cursor: default;
+    }
+
+    .member-card:hover {
+      background: var(--card-hover);
+    }
+
+    .member-card-bottom {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .member-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .member-name-ko {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .member-name-en {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+      display: block;
+    }
+
+    .member-info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .member-info-item {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .member-info-item span:first-child {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 400;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .member-info-item span:last-child {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .member-tag {
+      display: inline-block;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      border: 1px solid var(--line);
+      padding: 0.3rem 0.6rem;
+    }
+
+    .member-video-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.75rem;
+      border: 1px solid var(--line);
+      background: transparent;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 500;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--disco-track);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      width: fit-content;
+    }
+
+    .member-video-btn svg {
+      width: 10px;
+      height: 10px;
+      flex-shrink: 0;
+    }
+
+    .member-video-btn:hover {
+      background: var(--yt-hover-bg);
+      border-color: var(--yt-hover);
+      color: var(--yt-hover);
+    }
+
+    
+    .disco-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .disco-item {
+      display: grid;
+      grid-template-columns: 8rem 1fr auto auto;
+      align-items: center;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--line);
+      gap: 2rem;
+      transition: opacity 0.2s;
+    }
+
+    .disco-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .disco-tracks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 0.8rem;
+      margin-top: 0.1rem;
+    }
+
+    .disco-track {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 500;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--disco-track);
+    }
+
+    .disco-track.is-title {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .disco-track + .disco-track::before {
+      content: '·';
+      margin-right: 0.8rem;
+      color: var(--disco-dot);
+    }
+
+    .disco-item:first-child { border-top: 1px solid var(--line); }
+
+    .disco-date {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .disco-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+    }
+
+    .disco-type {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    
+    .links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      border: 1px solid var(--line);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .yt-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--line);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .yt-btn:hover {
+      background: var(--yt-hover-bg);
+      border-color: var(--yt-hover);
+      color: var(--yt-hover);
+    }
+
+    .link-btn:hover {
+      background: var(--card);
+      border-color: var(--accent);
+    }
+
+    .yt-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--line);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .yt-btn:hover {
+      background: var(--yt-hover-bg);
+      border-color: var(--yt-hover);
+      color: var(--yt-hover);
+    }
+
+    .yt-btn svg {
+      width: 11px;
+      height: 11px;
+      flex-shrink: 0;
+    }
+
+    
+    footer {
+      padding: 3rem 8vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    footer p {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      max-width: none;
+    }
+
+    .bday-dday {
+      display: inline-block;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      margin-left: 0.3rem;
+    }
+
+    .bday-dday.today {
+      color: var(--today-color);
+      font-weight: 400;
+    }
+
+    .tooltip-trigger {
+      position: relative;
+      cursor: help;
+      border-bottom: 1px dashed var(--accent);
+      font-style: italic;
+    }
+
+    .tooltip-box {
+      display: block;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      background: var(--text);
+      color: var(--bg);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 300;
+      line-height: 1.6;
+      letter-spacing: 0;
+      padding: 0.75rem 1rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      z-index: 100;
+      font-style: normal;
+      white-space: normal;
+    }
+
+    .tooltip-box::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--text);
+    }
+
+    .tooltip-trigger:hover .tooltip-box {
+      opacity: 1;
+    }
+
+    
+    .member-card {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.45s ease, transform 0.45s ease, background 0.25s ease;
+    }
+
+    .member-card.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    
+    .lang-switcher {
+      position: fixed;
+      bottom: 2.2rem;
+      left: 2.2rem;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .lang-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+      background: var(--bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s, background 0.35s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      text-decoration: none;
+      line-height: 1;
+      color: var(--text);
+      filter: none;
+    }
+
+    html.dark .lang-btn {
+      filter: brightness(1.15);
+    }
+
+    .lang-btn:hover {
+      border-color: var(--accent);
+      transform: scale(1.08);
+      box-shadow: 0 4px 16px rgba(154,125,106,0.22);
+    }
+
+    .lang-btn.active {
+      border-color: var(--accent);
+      background: var(--card);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 998;
+      display: flex;
+      align-items: center;
+      padding: 0 8vw;
+      height: 48px;
+      background: var(--bg);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.35s, box-shadow 0.3s;
+    }
+
+    .site-nav.scrolled {
+      border-bottom-color: var(--line);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--text);
+      text-decoration: none;
+      margin-right: auto;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      transition: color 0.2s;
+    }
+
+    .nav-logo:hover { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+    }
+
+    .nav-link {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .nav-link:hover,
+    .nav-link.nav-active {
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .site-nav { padding: 0 5vw; }
+      .nav-links { gap: 1.1rem; }
+      .nav-logo { display: none; }
+
+      section { padding: 4rem 5vw; }
+
+      header {
+        padding: 3rem 5vw 3rem;
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+      }
+
+      .header-left { width: 100%; }
+
+      .header-meta {
+        position: static;
+        text-align: left;
+        font-size: 0.6rem;
+        margin-top: 0;
+        opacity: 1;
+        animation: none;
+      }
+
+      .header-sub { font-size: 0.88rem; margin-top: 1.5rem; }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .about-facts { margin-top: 0; }
+
+      .fact-row {
+        flex-direction: column;
+        gap: 0.2rem;
+        padding: 0.8rem 0;
+      }
+
+      .members-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .member-photo-panel { display: none; }
+
+      .members-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+      }
+
+      .member-card {
+        padding: 1.4rem 1.2rem 7rem 1.2rem;
+      }
+
+      .member-card-bottom {
+        left: 1.2rem;
+        bottom: 1.2rem;
+      }
+
+      .member-number { margin-bottom: 0.8rem; font-size: 0.65rem; }
+      .member-name-ko { font-size: 1.4rem; }
+      .member-name-en { font-size: 0.58rem; margin-bottom: 1rem; }
+
+      .member-info-list { gap: 0.45rem; }
+      .member-info-item { gap: 0.1rem; }
+      .member-info-item span:first-child { font-size: 0.55rem; }
+      .member-info-item span:last-child { font-size: 0.75rem; }
+
+      .member-tag { font-size: 0.52rem; padding: 0.25rem 0.5rem; }
+      .member-video-btn { font-size: 0.52rem; padding: 0.3rem 0.55rem; }
+      .member-video-btn svg { width: 8px; height: 8px; }
+
+      .disco-item {
+        grid-template-columns: 1fr auto;
+        gap: 0.4rem 0.8rem;
+        padding: 1rem 0;
+      }
+
+      .disco-date  { grid-column: 1; grid-row: 1; }
+      .disco-title { grid-column: 1; grid-row: 2; font-size: 0.85rem; }
+      .disco-type  { grid-column: 1; grid-row: 3; text-align: left; }
+      .yt-btn      { grid-column: 2; grid-row: 1 / 4; align-self: center; }
+
+      .disco-tracks { grid-column: 1 / -1; margin-top: 0.2rem; flex-wrap: wrap; gap: 0.3rem 0; }
+
+      .links-row {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .link-btn { width: 100%; justify-content: center; }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 2.5rem 5vw;
+      }
+
+      .lang-switcher {
+        bottom: 1.5rem;
+        left: 1.5rem;
+      }
+
+      .ui-fixed-right {
+        bottom: 1.5rem;
+        right: 1.5rem;
+      }
+
+      h2 { font-size: 1.8rem; }
+
+      .section-label { font-size: 0.55rem; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links { gap: 0.8rem; }
+      .nav-link { font-size: 0.52rem; letter-spacing: 0.12em; }
+
+      section { padding: 3.5rem 5vw; }
+
+      h2 { font-size: 1.5rem; }
+
+      .members-grid { grid-template-columns: 1fr; }
+
+      .member-card { padding: 1.4rem 1.4rem 6.5rem 1.4rem; }
+      .member-card-bottom { left: 1.4rem; bottom: 1.2rem; }
+      .member-name-ko { font-size: 1.6rem; }
+      .member-info-item span:last-child { font-size: 0.8rem; }
+
+      .disco-title { font-size: 0.8rem; }
+    }
+  </style>
+  <style>
+    body { padding-top: 48px; }
+
+    .ui-fixed-right {
+      position: fixed;
+      bottom: 2.2rem;
+      right: 2.2rem;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .icon-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+      background: var(--bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s, background 0.35s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      color: var(--muted);
+    }
+
+    .icon-btn svg { width: 13px; height: 13px; }
+
+    .icon-btn:hover {
+      border-color: var(--accent);
+      transform: scale(1.08);
+      box-shadow: 0 4px 16px rgba(154,125,106,0.22);
+      color: var(--accent);
+    }
+
+    .scroll-top-btn {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease, border-color 0.2s, box-shadow 0.2s, transform 0.15s, background 0.35s;
+    }
+
+    .scroll-top-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav" id="site-nav">
+  <button class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">RESCENE</button>
+  <div class="nav-links">
+    <button class="nav-link" id="nav-about" onclick="scrollToSection('sec-about')">About</button>
+    <button class="nav-link" id="nav-members" onclick="scrollToSection('sec-members')">Members</button>
+    <button class="nav-link" id="nav-disco" onclick="scrollToSection('sec-disco')">Music</button>
+    <button class="nav-link" id="nav-links" onclick="scrollToSection('sec-links')">Links</button>
+  </div>
+</nav>
+
+<header>
+  <div class="header-left">
+    <p class="header-eyebrow">대한민국 걸그룹 — THE MUZE Entertainment</p>
+    <h1><span class="h1-script">Rescene</span><span class="h1-ko">리센느</span></h1>
+    <p class="header-sub">향기처럼 오래 기억되는 음악을 남기는 5인조 걸그룹. 장면과 향기가 하나가 되는 세계.</p>
+  </div>
+  <div class="header-right">
+    <img class="header-img" src="https://cdn.imweb.me/thumbnail/20250630/b0666a1e5ca4e.png" alt="RESCENE" />
+  </div>
+  <div class="header-meta">
+    데뷔 2024. 03. 26<br>
+    싱글 앨범 Re:Scene<br>
+    팬덤명 REMINE (리마인)
+  </div>
+</header>
+
+<section id="sec-about">
+  <div class="about-grid reveal">
+    <div>
+      <h2 id="about-h2">장면을 향기로,<br>음악을 기억으로</h2>
+      <p id="about-p1">걸그룹 RESCENE(리센느)는 원이, 미나미, 리브, 메이, 그리고 제나로 이루어진 다섯 멤버가 각각의 매력으로 완벽한 조화를 이루며, 그들의 고급스러운 비주얼과 세련된 음악으로 가요계에 오래도록 기억될 향기 같은 존재가 되고자 한다.</p>
+      <br>
+      <p id="about-p2">그룹명 RESCENE(리센느)는 'Scene(장면)'과 'Scent(향)'의 결합으로 마치 향기로 과거의 장면을 다시 떠올리듯 음악을 통해 듣는 이들의 마음속에 생생한 장면들을 그려내고, 고유의 향기를 세상에 퍼트린다는 의미를 담고 있다.</p>
+      <br>
+      <p id="about-p3">RESCENE(리센느)는 <span class="tooltip-trigger">프루스트 효과<span class="tooltip-box">프루스트 효과(Proust Effect)는 특정 향기(후각)를 통해 잊고 있던 과거의 기억과 감정을 생생하게 되살리는 심리 현상을 의미합니다.</span></span>(Proust Effect)라는 심리학적 현상을 음악적 영감의 원천으로 삼는데, 이는 향기가 과거의 기억을 되살릴 수 있다는 개념으로 RESCENE(리센느)의 멜로디와 가사는 향기처럼 리스너의 깊은 감정과 기억을 자극할 것이다.</p>
+      <br>
+      <p id="about-p4">'향기'와 '음악'을 핵심 키워드로 삼아 각 앨범마다 다양한 향기를 선보이며 세상에 존재하지 않는 리센느만의 향을 찾아가고자 한다. 이들의 목표는 단순히 음악적 성공을 넘어서, 리스너들의 마음속에 오래도록 남을 수 있는 음악적 향기를 선사하는 것이다.</p>
+      <br>
+      <p id="about-p5">RESCENE(리센느)는 향기로운 추억을 음악으로 빚어냄으로서 남들과는 다른 유일무이한 그룹 본연의 색을 찾아가며, 이 과정을 통해 가요계에 새로운 장을 열고자 한다.</p>
+    </div>
+    <div class="about-facts">
+      <div class="fact-row">
+        <span class="fact-key" id="fact-agency-key">소속사</span>
+        <span class="fact-val" id="fact-agency-val">THE MUZE Entertainment</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-key" id="fact-debut-key">데뷔</span>
+        <span class="fact-val" id="fact-debut-val">2024년 3월 26일</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-key" id="fact-members-key">멤버 수</span>
+        <span class="fact-val" id="fact-members-val">5인</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-key" id="fact-fandom-key">팬덤명</span>
+        <span class="fact-val" id="fact-fandom-val">REMINE (리마인)</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-key" id="fact-meaning-key">그룹명 의미</span>
+        <span class="fact-val" id="fact-meaning-val">향기로 다시(RE) 장면(SCENE)을 떠올린다</span>
+      </div>
+      <div class="fact-row">
+        <span class="fact-key" id="fact-since-key">데뷔로부터</span>
+        <span class="fact-val" id="days-since-debut">계산 중...</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sec-members">
+  <h2 class="reveal" id="members-h2">다섯 개의 장면</h2>
+  <br><br>
+  <div class="members-wrapper">
+  <div class="members-grid">
+
+    <div class="member-card" data-member="woni">
+      <span class="member-number">01</span>
+      <div class="member-name-ko">원이</div>
+      <div class="member-name-en">WONI</div>
+      <div class="member-info-list">
+        <div class="member-info-item">
+          <span class="mi-fullname">본명</span>
+          <span>정원이 (Jeong Woni)</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-birthday">생일</span>
+          <span>2004. 05. 25 <span class="bday-dday" data-birthday="05-25"></span></span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-nation">국적</span>
+          <span id="woni-nation">대한민국</span>
+        </div>
+        <div class="member-info-item">
+          <span>MBTI</span>
+          <span>ESFP</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-blood">혈액형</span>
+          <span id="woni-blood">B형</span>
+        </div>
+      </div>
+      <div class="member-card-bottom">
+        <span class="member-tag" id="woni-tag">Leader · 최연장</span>
+        <button class="member-video-btn" onclick="window.open('https://www.youtube.com/results?search_query=%23리센느+원이','_blank')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+          <span class="mvbtn-label">관련 영상</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="member-card" data-member="liv">
+      <span class="member-number">02</span>
+      <div class="member-name-ko">리브</div>
+      <div class="member-name-en">LIV</div>
+      <div class="member-info-list">
+        <div class="member-info-item">
+          <span class="mi-fullname">본명</span>
+          <span>진경은 (Jin Kyungeun)</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-birthday">생일</span>
+          <span>2006. 10. 11 <span class="bday-dday" data-birthday="10-11"></span></span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-nation">국적</span>
+          <span id="liv-nation">대한민국</span>
+        </div>
+        <div class="member-info-item">
+          <span>MBTI</span>
+          <span>ESFP</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-blood">혈액형</span>
+          <span id="liv-blood">A형</span>
+        </div>
+      </div>
+      <div class="member-card-bottom">
+        <span class="member-tag" id="liv-tag">Main Vocalist</span>
+        <button class="member-video-btn" onclick="window.open('https://www.youtube.com/results?search_query=%23리센느+리브','_blank')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+          <span class="mvbtn-label">관련 영상</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="member-card" data-member="minami">
+      <span class="member-number">03</span>
+      <div class="member-name-ko">미나미</div>
+      <div class="member-name-en">MINAMI</div>
+      <div class="member-info-list">
+        <div class="member-info-item">
+          <span class="mi-fullname">본명</span>
+          <span>이토 미나미 (Ito Minami)</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-birthday">생일</span>
+          <span>2006. 11. 29 <span class="bday-dday" data-birthday="11-29"></span></span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-nation">국적</span>
+          <span id="minami-nation">일본</span>
+        </div>
+        <div class="member-info-item">
+          <span>MBTI</span>
+          <span>ENFP</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-blood">혈액형</span>
+          <span id="minami-blood">O형</span>
+        </div>
+      </div>
+      <div class="member-card-bottom">
+        <span class="member-tag" id="minami-tag">Japanese Member</span>
+        <button class="member-video-btn" onclick="window.open('https://www.youtube.com/results?search_query=%23리센느+미나미','_blank')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+          <span class="mvbtn-label">관련 영상</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="member-card" data-member="may">
+      <span class="member-number">04</span>
+      <div class="member-name-ko">메이</div>
+      <div class="member-name-en">MAY</div>
+      <div class="member-info-list">
+        <div class="member-info-item">
+          <span class="mi-fullname">본명</span>
+          <span>이예빈 (Lee Yebin)</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-birthday">생일</span>
+          <span>2008. 08. 19 <span class="bday-dday" data-birthday="08-19"></span></span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-nation">국적</span>
+          <span id="may-nation">대한민국</span>
+        </div>
+        <div class="member-info-item">
+          <span>MBTI</span>
+          <span>INTP</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-blood">혈액형</span>
+          <span id="may-blood">AB형</span>
+        </div>
+      </div>
+      <div class="member-card-bottom">
+        <span class="member-tag" id="may-tag">Maknae Line</span>
+        <button class="member-video-btn" onclick="window.open('https://www.youtube.com/results?search_query=%23리센느+메이','_blank')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+          <span class="mvbtn-label">관련 영상</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="member-card" data-member="zena">
+      <span class="member-number">05</span>
+      <div class="member-name-ko">제나</div>
+      <div class="member-name-en">ZENA</div>
+      <div class="member-info-list">
+        <div class="member-info-item">
+          <span class="mi-fullname">본명</span>
+          <span>김가영 (Kim Gayoung)</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-birthday">생일</span>
+          <span>2008. 11. 27 <span class="bday-dday" data-birthday="11-27"></span></span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-nation">국적</span>
+          <span id="zena-nation">대한민국</span>
+        </div>
+        <div class="member-info-item">
+          <span>MBTI</span>
+          <span>INFP</span>
+        </div>
+        <div class="member-info-item">
+          <span class="mi-blood">혈액형</span>
+          <span id="zena-blood">A형</span>
+        </div>
+      </div>
+      <div class="member-card-bottom">
+        <span class="member-tag" id="zena-tag">Maknae Line</span>
+        <button class="member-video-btn" onclick="window.open('https://www.youtube.com/results?search_query=%23리센느+제나','_blank')">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+          <span class="mvbtn-label">관련 영상</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="member-photo-panel">
+    <img id="photo-woni"   src="https://yt3.ggpht.com/fw15szNgK0EtD96wDIt7JDwPkZvR2fC0BQ4_TtrJiUIKcvd5IXI6Vyn0mUmMPw7QJyyS6VGinpX71A=s640-c-fcrop64=1,000022d9ffffdd04-rw-nd-v1"   alt="원이" />
+    <img id="photo-liv"    src="https://yt3.ggpht.com/NgFXECl6llJp74OV73GKpxtDtmRyxVyzY5kQD4wsZLkSDGuef0goiB5-lq0Ap_3RrqXAl2zwjE4-5DY=s640-c-fcrop64=1,000022ddffffdd1c-rw-nd-v1"    alt="리브" />
+    <img id="photo-minami" src="https://yt3.ggpht.com/_B92lzgXW4sqvhChS_d_niEuX4o6dQMJ6Ayy8n8o3gOfRRKmUjrS0JpCGTRQl3QUDbV6p2YVWWDKlyI=s640-c-fcrop64=1,000022d9ffffdd08-rw-nd-v1" alt="미나미" />
+    <img id="photo-may"    src="https://yt3.ggpht.com/hqSkFrwVLz3apUnX966tyRF0WjLvctADS7Nd794l75SZ-hRGUuRwyifhsGJROnMTDIPBdD8Oep4UMQ=s640-c-fcrop64=1,000022d8ffffdd00-rw-nd-v1"    alt="메이" />
+    <img id="photo-zena"   src="https://yt3.ggpht.com/frb1B5WWWpyMNIHRXM5rE2SIpZcIJj0CYkY6_DUEF2ui_XKHydeI5M_tb2EH2kwrQ8Na5Zze1D_lvyg=s640-c-fcrop64=1,000022daffffdd0a-rw-nd-v1"   alt="제나" />
+  </div>
+
+  </div>
+</section>
+
+<section id="sec-disco">
+  <h2 class="reveal" id="disco-h2">음악</h2>
+  <br>
+  <div class="disco-list reveal">
+    <div class="disco-item">
+      <span class="disco-date">2024. 02. 29</span>
+      <span class="disco-title">YoYo</span>
+      <span class="disco-type">Pre-release Single</span>
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=uDYy2UyO1X4" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        MV
+      </a>
+    </div>
+    <div class="disco-item">
+      <span class="disco-date">2024. 03. 26</span>
+      <div class="disco-title-wrap">
+        <span class="disco-title">Re:Scene <small style="font-size:0.75rem;color:var(--muted);">(UhUh)</small></span>
+        <div class="disco-tracks">
+          <span class="disco-track">YoYo</span>
+          <span class="disco-track is-title">UhUh ★</span>
+        </div>
+      </div>
+      <span class="disco-type">Single Album</span>
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=zpSejlkSXLA" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        MV
+      </a>
+    </div>
+    <div class="disco-item">
+      <span class="disco-date">2024. 08. 27</span>
+      <div class="disco-title-wrap">
+        <span class="disco-title">Scenedrome <small style="font-size:0.75rem;color:var(--muted);">(Love Attack)</small></span>
+        <div class="disco-tracks">
+          <span class="disco-track">Lucky you</span>
+          <span class="disco-track is-title">LOVE ATTACK ★</span>
+          <span class="disco-track">New World</span>
+          <span class="disco-track is-title">Pinball ★</span>
+        </div>
+      </div>
+      <span class="disco-type">1st Mini Album</span>
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=9XttLI0oH0I" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        MV
+      </a>
+    </div>
+    <div class="disco-item">
+      <span class="disco-date">2025. 02. 05</span>
+      <div class="disco-title-wrap">
+        <span class="disco-title">Glow Up</span>
+        <div class="disco-tracks">
+          <span class="disco-track">CRASH</span>
+          <span class="disco-track is-title">Glow Up ★</span>
+          <span class="disco-track">Going on</span>
+          <span class="disco-track">In my lotion</span>
+          <span class="disco-track">Cotton Candy</span>
+        </div>
+      </div>
+      <span class="disco-type">2nd Mini Album</span>
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=h0xUtrb_JBc" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        MV
+      </a>
+    </div>
+    <div class="disco-item">
+      <span class="disco-date">2025. 07. 02</span>
+      <div class="disco-title-wrap">
+        <span class="disco-title">Dearest <small style="font-size:0.75rem;color:var(--muted);">(Deja Vu)</small></span>
+        <div class="disco-tracks">
+          <span class="disco-track is-title">Deja Vu ★</span>
+          <span class="disco-track">Mood</span>
+        </div>
+      </div>
+      <span class="disco-type">2nd Single Album</span>
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=ZbO9PBdFRdc" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        MV
+      </a>
+    </div>
+    <div class="disco-item">
+      <span class="disco-date">2025. 11. 25</span>
+      <div class="disco-title-wrap">
+        <span class="disco-title">Lip Bomb <small style="font-size:0.75rem;color:var(--muted);">(Bloom)</small></span>
+        <div class="disco-tracks">
+          <span class="disco-track is-title">Heart Drop ★</span>
+          <span class="disco-track is-title">Bloom ★</span>
+          <span class="disco-track">Love Echo</span>
+          <span class="disco-track">Hello XO</span>
+          <span class="disco-track">MVP</span>
+        </div>
+      </div>
+      <span class="disco-type">3rd Mini Album</span>
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=MC6-82GRK5I" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        MV
+      </a>
+    </div>
+    <div class="disco-item">
+      <span class="disco-date">2026. 04. 08</span>
+      <span class="disco-title">Runaway</span>
+      <span class="disco-type">Digital Single</span>
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=rsZwrTNklos" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        MV
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="sec-links">
+  <div class="section-label">Official Links</div>
+  <h2 class="reveal" id="links-h2">공식 채널</h2>
+  <div class="links-row reveal">
+    <a class="link-btn" href="https://youtube.com/@RESCENE_official" target="_blank">
+      ▶ YouTube
+    </a>
+    <a class="link-btn" href="https://instagram.com/rescene_official" target="_blank">
+      ◈ Instagram
+    </a>
+    <a class="link-btn" href="https://twitter.com/RESCENEofficial" target="_blank">
+      ✕ X (Twitter)
+    </a>
+    <a class="link-btn" href="https://tiktok.com/@rescene_official" target="_blank">
+      ♪ TikTok
+    </a>
+    <a class="link-btn" href="https://artist.mnetplus.world/main/stg/rescene-official" target="_blank">
+      ⬡ Mnet Plus
+    </a>
+    <a class="link-btn" href="https://blip.kr/artists/RESCENE" target="_blank">
+      ◎ Blip
+    </a>
+  </div>
+</section>
+
+<div class="lang-switcher">
+  <button class="lang-btn active" id="lang-ko" onclick="setLang('ko')" title="한국어">🇰🇷</button>
+  <button class="lang-btn" id="lang-ja" onclick="setLang('ja')" title="日本語">🇯🇵</button>
+  <button class="lang-btn" id="lang-en" onclick="setLang('en')" title="English">🇺🇸</button>
+</div>
+
+<div class="ui-fixed-right">
+  <button class="icon-btn" id="dark-toggle" onclick="toggleDark()" title="다크모드">
+    <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
+  <button class="icon-btn scroll-top-btn" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+</div>
+
+<footer>
+  <p>RESCENE (리센느) © THE MUZE Entertainment</p>
+  <p>Fan-made information page — 팬 제작 소개 페이지 by May_</p>
+</footer>
+
+<script>
+  
+  const translations = {
+    ko: {
+      pageTitle: 'RESCENE — 리센느',
+      htmlLang: 'ko',
+      headerEyebrow: '대한민국 걸그룹 — THE MUZE Entertainment',
+      headerSub: '향기처럼 오래 기억되는 음악을 남기는 5인조 걸그룹. 장면과 향기가 하나가 되는 세계.',
+      headerMetaLine1: '데뷔 2024. 03. 26',
+      headerMetaLine2: '싱글 앨범 Re:Scene',
+      headerMetaLine3: '팬덤명 REMINE (리마인)',
+      aboutH2: '장면을 향기로,<br>음악을 기억으로',
+      aboutP1: '걸그룹 RESCENE(리센느)는 원이, 미나미, 리브, 메이, 그리고 제나로 이루어진 다섯 멤버가 각각의 매력으로 완벽한 조화를 이루며, 그들의 고급스러운 비주얼과 세련된 음악으로 가요계에 오래도록 기억될 향기 같은 존재가 되고자 한다.',
+      aboutP2: '그룹명 RESCENE(리센느)는 \'Scene(장면)\'과 \'Scent(향)\'의 결합으로 마치 향기로 과거의 장면을 다시 떠올리듯 음악을 통해 듣는 이들의 마음속에 생생한 장면들을 그려내고, 고유의 향기를 세상에 퍼트린다는 의미를 담고 있다.',
+      aboutP3: 'RESCENE(리센느)는 <span class="tooltip-trigger">프루스트 효과<span class="tooltip-box">프루스트 효과(Proust Effect)는 특정 향기(후각)를 통해 잊고 있던 과거의 기억과 감정을 생생하게 되살리는 심리 현상을 의미합니다.</span></span>(Proust Effect)라는 심리학적 현상을 음악적 영감의 원천으로 삼는데, 이는 향기가 과거의 기억을 되살릴 수 있다는 개념으로 RESCENE(리센느)의 멜로디와 가사는 향기처럼 리스너의 깊은 감정과 기억을 자극할 것이다.',
+      aboutP4: '\'향기\'와 \'음악\'을 핵심 키워드로 삼아 각 앨범마다 다양한 향기를 선보이며 세상에 존재하지 않는 리센느만의 향을 찾아가고자 한다. 이들의 목표는 단순히 음악적 성공을 넘어서, 리스너들의 마음속에 오래도록 남을 수 있는 음악적 향기를 선사하는 것이다.',
+      aboutP5: 'RESCENE(리센느)는 향기로운 추억을 음악으로 빚어냄으로서 남들과는 다른 유일무이한 그룹 본연의 색을 찾아가며, 이 과정을 통해 가요계에 새로운 장을 열고자 한다.',
+      factAgency: '소속사', factDebut: '데뷔', factMembers: '멤버 수', factFandom: '팬덤명',
+      factMeaning: '그룹명 의미', factSince: '데뷔로부터',
+      factAgencyVal: 'THE MUZE Entertainment',
+      factDebutVal: '2024년 3월 26일',
+      factMembersVal: '5인',
+      factFandomVal: 'REMINE (리마인)',
+      factMeaningVal: '향기로 다시(RE) 장면(SCENE)을 떠올린다',
+      daysSuffix: '일',
+      membersH2: '다섯 개의 장면',
+      discographyH2: '음악',
+      linksH2: '공식 채널',
+      
+      m_fullname: '본명', m_birthday: '생일', m_nation: '국적', m_blood: '혈액형',
+      woni_nation: '대한민국', liv_nation: '대한민국', minami_nation: '일본',
+      may_nation: '대한민국', zena_nation: '대한민국',
+      woni_blood: 'B형', liv_blood: 'A형', minami_blood: 'O형', may_blood: 'AB형', zena_blood: 'A형',
+      woni_tag: 'Leader · 최연장', liv_tag: 'Main Vocalist', minami_tag: 'Japanese Member',
+      may_tag: 'Maknae Line', zena_tag: 'Maknae Line',
+      todayText: '🎂 오늘!',
+      videoBtnLabel: '관련 영상',
+      woni_search: '%23리센느+원이', liv_search: '%23리센느+리브', minami_search: '%23리센느+미나미',
+      may_search: '%23리센느+메이', zena_search: '%23리센느+제나',
+      footerLine1: 'RESCENE (리센느) © THE MUZE Entertainment',
+      footerLine2: 'Fan-made information page — 팬 제작 소개 페이지',
+    },
+    ja: {
+      pageTitle: 'RESCENE — リセンヌ',
+      htmlLang: 'ja',
+      headerEyebrow: '韓国ガールズグループ — THE MUZE Entertainment',
+      headerSub: '香りのように長く記憶に残る音楽を届ける5人組ガールズグループ。シーンと香りがひとつになる世界。',
+      headerMetaLine1: 'デビュー 2024. 03. 26',
+      headerMetaLine2: 'シングルアルバム Re:Scene',
+      headerMetaLine3: 'ファンダム名 REMINE (リマイン)',
+      aboutH2: 'シーンを香りに、<br>音楽を記憶に',
+      aboutP1: 'ガールズグループRESCENE（リセンヌ）は、ウォニ、ミナミ、リブ、メイ、そしてゼナの5人がそれぞれの魅力で完璧なハーモニーを奏で、洗練されたビジュアルと音楽で韓国音楽界に香りのような存在として長く記憶されることを目指している。',
+      aboutP2: 'グループ名RESCENE（リセンヌ）は「Scene（場面）」と「Scent（香り）」を組み合わせた造語で、香りが過去の場面を呼び起こすように、音楽を通じてリスナーの心に鮮やかなシーンを描き、固有の香りを世界に広めるという意味が込められている。',
+      aboutP3: 'RESCENE（リセンヌ）は<span class="tooltip-trigger">プルースト効果<span class="tooltip-box">プルースト効果（Proust Effect）とは、特定の香り（嗅覚）を通じて忘れていた過去の記憶や感情を鮮明に呼び起こす心理現象です。</span></span>（Proust Effect）という心理学的現象を音楽的インスピレーションの源としており、香りが過去の記憶を蘇らせるというコンセプトのもと、メロディーと歌詞でリスナーの深い感情と記憶を刺激する。',
+      aboutP4: '「香り」と「音楽」をキーワードにアルバムごとに異なる香りを表現し、世界にひとつだけのRESCENEの香りを探し求める。目標は音楽的な成功にとどまらず、リスナーの心に長く残る音楽的な香りを届けることだ。',
+      aboutP5: 'RESCENE（リセンヌ）は、香り豊かな思い出を音楽に込めることで唯一無二のグループの色を見つけ、その過程を通じて韓国音楽界に新たな章を開こうとしている。',
+      factAgency: '所属事務所', factDebut: 'デビュー', factMembers: 'メンバー数', factFandom: 'ファンダム名',
+      factMeaning: 'グループ名の意味', factSince: 'デビューから',
+      factAgencyVal: 'THE MUZE Entertainment',
+      factDebutVal: '2024年3月26日',
+      factMembersVal: '5人',
+      factFandomVal: 'REMINE (リマイン)',
+      factMeaningVal: '香りで再び(RE)シーン(SCENE)を思い起こす',
+      daysSuffix: '日',
+      membersH2: '5つのシーン',
+      discographyH2: '音楽',
+      linksH2: '公式チャンネル',
+      m_fullname: '本名', m_birthday: '誕生日', m_nation: '国籍', m_blood: '血液型',
+      woni_nation: '韓国', liv_nation: '韓国', minami_nation: '日本',
+      may_nation: '韓国', zena_nation: '韓国',
+      woni_blood: 'B型', liv_blood: 'A型', minami_blood: 'O型', may_blood: 'AB型', zena_blood: 'A型',
+      woni_tag: 'Leader · 最年長', liv_tag: 'Main Vocalist', minami_tag: '日本人メンバー',
+      may_tag: 'マンネライン', zena_tag: 'マンネライン',
+      todayText: '🎂 今日！',
+      videoBtnLabel: '関連動画',
+      woni_search: '%23リセンヌ+ウォニ', liv_search: '%23リセンヌ+リブ', minami_search: '%23リセンヌ+ミナミ',
+      may_search: '%23リセンヌ+メイ', zena_search: '%23リセンヌ+ゼナ',
+      footerLine1: 'RESCENE (リセンヌ) © THE MUZE Entertainment',
+      footerLine2: 'ファン制作情報ページ',
+    },
+    en: {
+      pageTitle: 'RESCENE — 리센느',
+      htmlLang: 'en',
+      headerEyebrow: 'Korean Girl Group — THE MUZE Entertainment',
+      headerSub: 'A 5-member girl group leaving music as enduring as a scent. A world where scenes and fragrance become one.',
+      headerMetaLine1: 'Debut 2024. 03. 26',
+      headerMetaLine2: 'Single Album Re:Scene',
+      headerMetaLine3: 'Fandom Name REMINE',
+      aboutH2: 'Scenes into Fragrance,<br>Music into Memory',
+      aboutP1: 'RESCENE is a five-member girl group consisting of Woni, Minami, Liv, May, and Zena. Each member brings their own unique charm, creating a perfect harmony that aims to leave a lasting, fragrant impression on the music world through stunning visuals and refined artistry.',
+      aboutP2: "The name RESCENE is a blend of 'Scene' and 'Scent' — just as a fragrance can transport you back to a vivid memory, RESCENE paints vibrant scenes in the hearts of listeners through music, spreading their unique scent across the world.",
+      aboutP3: 'RESCENE draws inspiration from the <span class="tooltip-trigger">Proust Effect<span class="tooltip-box">The Proust Effect refers to the psychological phenomenon where a specific scent triggers vivid recollections of past memories and emotions.</span></span> — the idea that a scent can revive long-forgotten memories. Their melodies and lyrics are crafted to stir deep emotions and recollections in their listeners, much like a familiar fragrance.',
+      aboutP4: "With 'fragrance' and 'music' as their guiding keywords, RESCENE explores a new olfactory palette with every album, seeking a scent entirely their own — one that exists nowhere else in the world.",
+      aboutP5: 'By distilling fragrant memories into music, RESCENE pursues a color uniquely their own, carving out a new chapter in the music industry through this artistic journey.',
+      factAgency: 'Agency', factDebut: 'Debut', factMembers: 'Members', factFandom: 'Fandom Name',
+      factMeaning: 'Group Name Meaning', factSince: 'Days Since Debut',
+      factAgencyVal: 'THE MUZE Entertainment',
+      factDebutVal: 'March 26, 2024',
+      factMembersVal: '5',
+      factFandomVal: 'REMINE',
+      factMeaningVal: 'RE-experiencing a SCENE through fragrance',
+      daysSuffix: ' days',
+      membersH2: 'Five Scenes',
+      discographyH2: 'Music',
+      linksH2: 'Official Channels',
+      m_fullname: 'Full Name', m_birthday: 'Birthday', m_nation: 'Nationality', m_blood: 'Blood Type',
+      woni_nation: 'South Korea', liv_nation: 'South Korea', minami_nation: 'Japan',
+      may_nation: 'South Korea', zena_nation: 'South Korea',
+      woni_blood: 'Type B', liv_blood: 'Type A', minami_blood: 'Type O', may_blood: 'Type AB', zena_blood: 'Type A',
+      woni_tag: 'Leader · Eldest', liv_tag: 'Main Vocalist', minami_tag: 'Japanese Member',
+      may_tag: 'Maknae Line', zena_tag: 'Maknae Line',
+      todayText: '🎂 Today!',
+      videoBtnLabel: 'Related Videos',
+      woni_search: '%23RESCENE+Woni', liv_search: '%23RESCENE+Liv', minami_search: '%23RESCENE+Minami',
+      may_search: '%23RESCENE+May', zena_search: '%23RESCENE+Zena',
+      footerLine1: 'RESCENE (리센느) © THE MUZE Entertainment',
+      footerLine2: 'Fan-made information page',
+    }
+  };
+
+  let currentLang = 'ko';
+
+  function setLang(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+    document.documentElement.lang = t.htmlLang;
+    document.title = t.pageTitle;
+
+    
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('lang-' + lang).classList.add('active');
+
+    
+    document.querySelector('.header-eyebrow').textContent = t.headerEyebrow;
+    document.querySelector('.header-sub').textContent = t.headerSub;
+    const meta = document.querySelector('.header-meta');
+    meta.innerHTML = t.headerMetaLine1 + '<br>' + t.headerMetaLine2 + '<br>' + t.headerMetaLine3;
+
+    
+    document.querySelector('#about-h2').innerHTML = t.aboutH2;
+    document.querySelector('#about-p1').innerHTML = t.aboutP1;
+    document.querySelector('#about-p2').innerHTML = t.aboutP2;
+    document.querySelector('#about-p3').innerHTML = t.aboutP3;
+    document.querySelector('#about-p4').innerHTML = t.aboutP4;
+    document.querySelector('#about-p5').innerHTML = t.aboutP5;
+
+    
+    document.getElementById('fact-agency-key').textContent = t.factAgency;
+    document.getElementById('fact-debut-key').textContent = t.factDebut;
+    document.getElementById('fact-members-key').textContent = t.factMembers;
+    document.getElementById('fact-fandom-key').textContent = t.factFandom;
+    document.getElementById('fact-meaning-key').textContent = t.factMeaning;
+    document.getElementById('fact-since-key').textContent = t.factSince;
+    document.getElementById('fact-agency-val').textContent = t.factAgencyVal;
+    document.getElementById('fact-debut-val').textContent = t.factDebutVal;
+    document.getElementById('fact-members-val').textContent = t.factMembersVal;
+    document.getElementById('fact-fandom-val').textContent = t.factFandomVal;
+    document.getElementById('fact-meaning-val').textContent = t.factMeaningVal;
+
+    
+    const diffDaysRecalc = Math.floor((today - debut) / (1000 * 60 * 60 * 24));
+    document.getElementById('days-since-debut').textContent = diffDaysRecalc.toLocaleString() + t.daysSuffix;
+
+    
+    document.getElementById('members-h2').textContent = t.membersH2;
+    document.getElementById('disco-h2').textContent = t.discographyH2;
+    document.getElementById('links-h2').textContent = t.linksH2;
+
+    
+    document.querySelectorAll('.mi-fullname').forEach(el => el.textContent = t.m_fullname);
+    document.querySelectorAll('.mi-birthday').forEach(el => el.textContent = t.m_birthday);
+    document.querySelectorAll('.mi-nation').forEach(el => el.textContent = t.m_nation);
+    document.querySelectorAll('.mi-blood').forEach(el => el.textContent = t.m_blood);
+
+    
+    document.getElementById('woni-nation').textContent = t.woni_nation;
+    document.getElementById('liv-nation').textContent = t.liv_nation;
+    document.getElementById('minami-nation').textContent = t.minami_nation;
+    document.getElementById('may-nation').textContent = t.may_nation;
+    document.getElementById('zena-nation').textContent = t.zena_nation;
+
+    
+    document.getElementById('woni-blood').textContent = t.woni_blood;
+    document.getElementById('liv-blood').textContent = t.liv_blood;
+    document.getElementById('minami-blood').textContent = t.minami_blood;
+    document.getElementById('may-blood').textContent = t.may_blood;
+    document.getElementById('zena-blood').textContent = t.zena_blood;
+
+    
+    document.getElementById('woni-tag').textContent = t.woni_tag;
+    document.getElementById('liv-tag').textContent = t.liv_tag;
+    document.getElementById('minami-tag').textContent = t.minami_tag;
+    document.getElementById('may-tag').textContent = t.may_tag;
+    document.getElementById('zena-tag').textContent = t.zena_tag;
+
+    
+    document.querySelectorAll('.bday-dday').forEach(el => {
+      const [mm, dd] = el.dataset.birthday.split('-').map(Number);
+      const now2 = new Date(); now2.setHours(0,0,0,0);
+      let next = new Date(now2.getFullYear(), mm - 1, dd); next.setHours(0,0,0,0);
+      if (next < now2) next = new Date(now2.getFullYear() + 1, mm - 1, dd);
+      const diff = Math.round((next - now2) / (1000 * 60 * 60 * 24));
+      if (diff === 0) { el.textContent = t.todayText; el.classList.add('today'); }
+      else { el.textContent = 'D-' + diff; el.classList.remove('today'); }
+    });
+
+    
+    const footerPs = document.querySelectorAll('footer p');
+    if (footerPs[0]) footerPs[0].textContent = t.footerLine1;
+    if (footerPs[1]) footerPs[1].textContent = t.footerLine2;
+
+    document.querySelectorAll('.mvbtn-label').forEach(el => el.textContent = t.videoBtnLabel);
+    const memberSearchMap = {
+      woni: t.woni_search, liv: t.liv_search, minami: t.minami_search,
+      may: t.may_search, zena: t.zena_search
+    };
+    document.querySelectorAll('.member-video-btn').forEach(btn => {
+      const card = btn.closest('.member-card');
+      if (card) {
+        const key = card.dataset.member;
+        if (memberSearchMap[key]) {
+          btn.onclick = () => window.open('https://www.youtube.com/results?search_query=' + memberSearchMap[key], '_blank');
+        }
+      }
+    });
+  }
+
+  const debut = new Date('2024-03-26');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  debut.setHours(0, 0, 0, 0);
+  const diffDays = Math.floor((today - debut) / (1000 * 60 * 60 * 24));
+  document.getElementById('days-since-debut').textContent = diffDays.toLocaleString() + translations[currentLang].daysSuffix;
+
+  
+  document.querySelectorAll('.bday-dday').forEach(el => {
+    const [mm, dd] = el.dataset.birthday.split('-').map(Number);
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    let next = new Date(now.getFullYear(), mm - 1, dd);
+    next.setHours(0, 0, 0, 0);
+    if (next < now) next = new Date(now.getFullYear() + 1, mm - 1, dd);
+    const diff = Math.round((next - now) / (1000 * 60 * 60 * 24));
+    if (diff === 0) {
+      el.textContent = translations[currentLang].todayText;
+      el.classList.add('today');
+    } else {
+      el.textContent = 'D-' + diff;
+    }
+  });
+
+  
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => revealObserver.observe(el));
+
+  
+  const cards = document.querySelectorAll('.member-card');
+  const grid = document.querySelector('.members-grid');
+  let membersAnimated = false;
+
+  const memberObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !membersAnimated) {
+        membersAnimated = true;
+        cards.forEach((card, i) => {
+          setTimeout(() => {
+            card.classList.add('visible');
+          }, i * 100);
+        });
+        memberObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  if (grid) memberObserver.observe(grid);
+  
+  const photoMap = {
+    woni:   document.getElementById('photo-woni'),
+    liv:    document.getElementById('photo-liv'),
+    minami: document.getElementById('photo-minami'),
+    may:    document.getElementById('photo-may'),
+    zena:   document.getElementById('photo-zena'),
+  };
+  let activePhoto = null;
+
+  document.querySelectorAll('.member-card[data-member]').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const key = card.dataset.member;
+      const img = photoMap[key];
+      if (!img || img === activePhoto) return;
+      if (activePhoto) activePhoto.classList.remove('active');
+      img.classList.add('active');
+      activePhoto = img;
+    });
+    card.addEventListener('mouseleave', () => {
+      
+      
+      setTimeout(() => {
+        const panel = document.querySelector('.member-photo-panel');
+        if (panel && panel.matches(':hover')) return;
+        const anyHovered = document.querySelector('.member-card[data-member]:hover');
+        if (!anyHovered && activePhoto) {
+          activePhoto.classList.remove('active');
+          activePhoto = null;
+        }
+      }, 80);
+    });
+  });
+
+  document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+  function toggleDark() {
+    const isDark = document.documentElement.classList.toggle('dark');
+    document.getElementById('icon-moon').style.display = isDark ? 'none' : '';
+    document.getElementById('icon-sun').style.display = isDark ? '' : 'none';
+  }
+
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 56, behavior: 'smooth' });
+  }
+
+  const navSections = [
+    { id: 'sec-about',   navId: 'nav-about' },
+    { id: 'sec-members', navId: 'nav-members' },
+    { id: 'sec-disco',   navId: 'nav-disco' },
+    { id: 'sec-links',   navId: 'nav-links' },
+  ];
+
+  function onScroll() {
+    const scrollTop = document.getElementById('scroll-top');
+    if (window.scrollY > 400) scrollTop.classList.add('visible');
+    else scrollTop.classList.remove('visible');
+
+    const nav = document.getElementById('site-nav');
+    if (window.scrollY > 20) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+
+    const mid = window.scrollY + window.innerHeight / 3;
+    let active = null;
+    for (const s of navSections) {
+      const el = document.getElementById(s.id);
+      if (el && el.offsetTop <= mid) active = s.navId;
+    }
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('nav-active'));
+    if (active) document.getElementById(active)?.classList.add('nav-active');
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+</body>
+</html>
