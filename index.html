@@ -696,6 +696,323 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    .album-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(10, 10, 8, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .album-modal-overlay.open {
+      display: flex;
+    }
+    .album-modal {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      max-width: 640px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: modalIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .album-modal-art {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.92);
+    }
+    .album-modal-art-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .album-modal-body {
+      padding: 2rem 2.2rem 2.2rem;
+    }
+    .album-modal-meta {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .album-modal-type {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 0.18rem 0.6rem;
+      opacity: 0.8;
+    }
+    .album-modal-date {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+    }
+    .album-modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+    .album-modal-subtitle {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .album-modal-tracks-label {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .album-modal-tracks-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .album-modal-tracklist {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+    .album-modal-tracklist li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--line);
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--para);
+      transition: color 0.18s ease;
+    }
+    .album-modal-tracklist li:last-child { border-bottom: none; }
+    .album-modal-tracklist li:hover { color: var(--text); }
+    .album-modal-track-num {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 0.6rem;
+      color: var(--muted);
+      min-width: 1.4rem;
+      letter-spacing: 0.05em;
+    }
+    .album-modal-tracklist li.is-title {
+      color: var(--text);
+      font-weight: 400;
+    }
+    .album-modal-tracklist li.is-title .album-modal-track-num {
+      color: var(--accent);
+    }
+    .title-star {
+      font-size: 0.55rem;
+      color: var(--accent);
+      vertical-align: super;
+      margin-left: 0.2rem;
+    }
+    .album-modal-actions {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .album-modal-mv-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--line);
+      padding: 0.65rem 1.3rem;
+      transition: all 0.22s ease;
+    }
+    .album-modal-mv-btn:hover {
+      border-color: var(--yt-hover);
+      color: var(--yt-hover);
+    }
+    .album-modal-mv-btn svg {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+    }
+    .album-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(0,0,0,0.35);
+      border: none;
+      color: #fff;
+      width: 2rem;
+      height: 2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: background 0.18s ease;
+      z-index: 10;
+    }
+    .album-modal-close:hover { background: rgba(0,0,0,0.6); }
+    .disco-item {
+      cursor: pointer;
+    }
+    .disco-item:hover .disco-title {
+      color: var(--accent);
+      transition: color 0.18s ease;
+    }
+    @media (max-width: 600px) {
+      .album-modal-body { padding: 1.4rem 1.4rem 1.8rem; }
+      .album-modal { max-height: 95vh; }
+    }
+
+    .awards-filter {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .award-filter-btn {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+    .award-filter-btn:hover,
+    .award-filter-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .awards-timeline {
+      position: relative;
+      padding-left: 2.4rem;
+    }
+    .awards-timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      bottom: 0;
+      width: 1px;
+      background: var(--line);
+    }
+    .award-item {
+      position: relative;
+      padding-bottom: 2.6rem;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .award-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .award-item.hidden {
+      display: none;
+    }
+    .award-item::before {
+      content: '';
+      position: absolute;
+      left: -2.4rem;
+      top: 0.55rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--line);
+      border: 1.5px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--line);
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .award-item:hover::before {
+      background: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    .award-date {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .award-category-tag {
+      display: inline-block;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 400;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1.5px solid currentColor;
+      padding: 0.15rem 0.55rem;
+      margin-bottom: 0.5rem;
+      opacity: 1;
+    }
+    .award-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+      line-height: 1.4;
+    }
+    .award-note {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--para);
+      line-height: 1.7;
+    }
+    @media (max-width: 700px) {
+      .awards-timeline { padding-left: 1.6rem; }
+      .award-item::before { left: -1.6rem; }
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(16px);
@@ -1007,6 +1324,7 @@
     <button class="nav-link" id="nav-about" onclick="scrollToSection('sec-about')">About</button>
     <button class="nav-link" id="nav-members" onclick="scrollToSection('sec-members')">Members</button>
     <button class="nav-link" id="nav-disco" onclick="scrollToSection('sec-disco')">Music</button>
+    <button class="nav-link" id="nav-awards" onclick="scrollToSection('sec-awards')">Awards</button>
     <button class="nav-link" id="nav-links" onclick="scrollToSection('sec-links')">Links</button>
   </div>
 </nav>
@@ -1268,16 +1586,16 @@
   <h2 class="reveal" id="disco-h2">음악</h2>
   <br>
   <div class="disco-list reveal">
-    <div class="disco-item">
+    <div class="disco-item" onclick="openAlbumModal('yoyo')" role="button" tabindex="0">
       <span class="disco-date">2024. 02. 29</span>
       <span class="disco-title">YoYo</span>
       <span class="disco-type">Pre-release Single</span>
-      <a class="yt-btn" href="https://www.youtube.com/watch?v=uDYy2UyO1X4" target="_blank">
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=uDYy2UyO1X4" target="_blank" onclick="event.stopPropagation()">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
         MV
       </a>
     </div>
-    <div class="disco-item">
+    <div class="disco-item" onclick="openAlbumModal('rescene')" role="button" tabindex="0">
       <span class="disco-date">2024. 03. 26</span>
       <div class="disco-title-wrap">
         <span class="disco-title">Re:Scene <small style="font-size:0.75rem;color:var(--muted);">(UhUh)</small></span>
@@ -1287,12 +1605,12 @@
         </div>
       </div>
       <span class="disco-type">Single Album</span>
-      <a class="yt-btn" href="https://www.youtube.com/watch?v=zpSejlkSXLA" target="_blank">
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=zpSejlkSXLA" target="_blank" onclick="event.stopPropagation()">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
         MV
       </a>
     </div>
-    <div class="disco-item">
+    <div class="disco-item" onclick="openAlbumModal('scenedrome')" role="button" tabindex="0">
       <span class="disco-date">2024. 08. 27</span>
       <div class="disco-title-wrap">
         <span class="disco-title">Scenedrome <small style="font-size:0.75rem;color:var(--muted);">(Love Attack)</small></span>
@@ -1304,12 +1622,12 @@
         </div>
       </div>
       <span class="disco-type">1st Mini Album</span>
-      <a class="yt-btn" href="https://www.youtube.com/watch?v=9XttLI0oH0I" target="_blank">
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=9XttLI0oH0I" target="_blank" onclick="event.stopPropagation()">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
         MV
       </a>
     </div>
-    <div class="disco-item">
+    <div class="disco-item" onclick="openAlbumModal('glowup')" role="button" tabindex="0">
       <span class="disco-date">2025. 02. 05</span>
       <div class="disco-title-wrap">
         <span class="disco-title">Glow Up</span>
@@ -1322,12 +1640,12 @@
         </div>
       </div>
       <span class="disco-type">2nd Mini Album</span>
-      <a class="yt-btn" href="https://www.youtube.com/watch?v=h0xUtrb_JBc" target="_blank">
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=h0xUtrb_JBc" target="_blank" onclick="event.stopPropagation()">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
         MV
       </a>
     </div>
-    <div class="disco-item">
+    <div class="disco-item" onclick="openAlbumModal('dearest')" role="button" tabindex="0">
       <span class="disco-date">2025. 07. 02</span>
       <div class="disco-title-wrap">
         <span class="disco-title">Dearest <small style="font-size:0.75rem;color:var(--muted);">(Deja Vu)</small></span>
@@ -1337,12 +1655,12 @@
         </div>
       </div>
       <span class="disco-type">2nd Single Album</span>
-      <a class="yt-btn" href="https://www.youtube.com/watch?v=ZbO9PBdFRdc" target="_blank">
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=ZbO9PBdFRdc" target="_blank" onclick="event.stopPropagation()">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
         MV
       </a>
     </div>
-    <div class="disco-item">
+    <div class="disco-item" onclick="openAlbumModal('lipbomb')" role="button" tabindex="0">
       <span class="disco-date">2025. 11. 25</span>
       <div class="disco-title-wrap">
         <span class="disco-title">Lip Bomb <small style="font-size:0.75rem;color:var(--muted);">(Bloom)</small></span>
@@ -1355,19 +1673,95 @@
         </div>
       </div>
       <span class="disco-type">3rd Mini Album</span>
-      <a class="yt-btn" href="https://www.youtube.com/watch?v=MC6-82GRK5I" target="_blank">
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=MC6-82GRK5I" target="_blank" onclick="event.stopPropagation()">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
         MV
       </a>
     </div>
-    <div class="disco-item">
+    <div class="disco-item" onclick="openAlbumModal('runaway')" role="button" tabindex="0">
       <span class="disco-date">2026. 04. 08</span>
       <span class="disco-title">Runaway</span>
       <span class="disco-type">Digital Single</span>
-      <a class="yt-btn" href="https://www.youtube.com/watch?v=rsZwrTNklos" target="_blank">
+      <a class="yt-btn" href="https://www.youtube.com/watch?v=rsZwrTNklos" target="_blank" onclick="event.stopPropagation()">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
         MV
       </a>
+    </div>
+  </div>
+</section>
+
+<section id="sec-awards">
+  <div class="section-label" id="awards-label">Awards &amp; Recognition</div>
+  <h2 class="reveal" id="awards-h2">주목과 기록</h2>
+
+  <div class="awards-filter reveal">
+    <button class="award-filter-btn active" data-filter="all" onclick="filterAwards('all', this)" id="awards-filter-all">전체</button>
+    <button class="award-filter-btn" data-filter="국내 수상" onclick="filterAwards('국내 수상', this)" id="awards-filter-domestic">국내 수상</button>
+    <button class="award-filter-btn" data-filter="국내 성과" onclick="filterAwards('국내 성과', this)" id="awards-filter-achievement">국내 성과</button>
+    <button class="award-filter-btn" data-filter="국내 표창/위촉" onclick="filterAwards('국내 표창/위촉', this)" id="awards-filter-official">국내 위촉</button>
+    <button class="award-filter-btn" data-filter="해외 선정" onclick="filterAwards('해외 선정', this)" id="awards-filter-intl">해외 선정</button>
+  </div>
+
+  <div class="awards-timeline">
+    <div class="award-item" data-category="국내 성과">
+      <div class="award-date">2024 · 10 · 01</div>
+      <div class="award-category-tag" id="award-cat-0"></div>
+      <div class="award-title" id="award-title-0"></div>
+      <div class="award-note" id="award-note-0"></div>
+    </div>
+    <div class="award-item" data-category="국내 수상">
+      <div class="award-date">2024 · 11 · 02</div>
+      <div class="award-category-tag" id="award-cat-1"></div>
+      <div class="award-title" id="award-title-1"></div>
+      <div class="award-note" id="award-note-1"></div>
+    </div>
+    <div class="award-item" data-category="해외 선정">
+      <div class="award-date">2024 · 12 · 10</div>
+      <div class="award-category-tag" id="award-cat-2"></div>
+      <div class="award-title" id="award-title-2"></div>
+      <div class="award-note" id="award-note-2"></div>
+    </div>
+    <div class="award-item" data-category="해외 선정">
+      <div class="award-date">2024 · 12 · 19</div>
+      <div class="award-category-tag" id="award-cat-3"></div>
+      <div class="award-title" id="award-title-3"></div>
+      <div class="award-note" id="award-note-3"></div>
+    </div>
+    <div class="award-item" data-category="해외 선정">
+      <div class="award-date">2025 · 01 · 12</div>
+      <div class="award-category-tag" id="award-cat-4"></div>
+      <div class="award-title" id="award-title-4"></div>
+      <div class="award-note" id="award-note-4"></div>
+    </div>
+    <div class="award-item" data-category="국내 표창/위촉">
+      <div class="award-date">2025 · 02 · 11</div>
+      <div class="award-category-tag" id="award-cat-5"></div>
+      <div class="award-title" id="award-title-5"></div>
+      <div class="award-note" id="award-note-5"></div>
+    </div>
+    <div class="award-item" data-category="해외 선정">
+      <div class="award-date">2025 · 02 · 12</div>
+      <div class="award-category-tag" id="award-cat-6"></div>
+      <div class="award-title" id="award-title-6"></div>
+      <div class="award-note" id="award-note-6"></div>
+    </div>
+    <div class="award-item" data-category="국내 수상">
+      <div class="award-date">2025 · 08 · 28</div>
+      <div class="award-category-tag" id="award-cat-7"></div>
+      <div class="award-title" id="award-title-7"></div>
+      <div class="award-note" id="award-note-7"></div>
+    </div>
+    <div class="award-item" data-category="해외 선정">
+      <div class="award-date">2025 · 12 · 10</div>
+      <div class="award-category-tag" id="award-cat-8"></div>
+      <div class="award-title" id="award-title-8"></div>
+      <div class="award-note" id="award-note-8"></div>
+    </div>
+    <div class="award-item" data-category="국내 수상">
+      <div class="award-date">2026 · 01 · 06</div>
+      <div class="award-category-tag" id="award-cat-9"></div>
+      <div class="award-title" id="award-title-9"></div>
+      <div class="award-note" id="award-note-9"></div>
     </div>
   </div>
 </section>
@@ -1413,6 +1807,25 @@
   </button>
 </div>
 
+<!-- Album Modal -->
+<div class="album-modal-overlay" id="album-modal-overlay" onclick="closeAlbumModal(event)">
+  <div class="album-modal" id="album-modal">
+    <button class="album-modal-close" onclick="closeAlbumModal(null)" aria-label="닫기">✕</button>
+    <div id="album-modal-art-wrap"></div>
+    <div class="album-modal-body">
+      <div class="album-modal-meta">
+        <span class="album-modal-type" id="modal-type"></span>
+        <span class="album-modal-date" id="modal-date"></span>
+      </div>
+      <div class="album-modal-title" id="modal-title"></div>
+      <div class="album-modal-subtitle" id="modal-subtitle"></div>
+      <div class="album-modal-tracks-label" id="modal-tracks-label">Track List</div>
+      <ul class="album-modal-tracklist" id="modal-tracklist"></ul>
+      <div class="album-modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+</div>
+
 <footer>
   <p>RESCENE (리센느) © THE MUZE Entertainment</p>
   <p>Fan-made information page — 팬 제작 소개 페이지 by May_</p>
@@ -1446,8 +1859,22 @@
       membersH2: '다섯 개의 장면',
       discographyH2: '음악',
       linksH2: '공식 채널',
-      
-      m_fullname: '본명', m_birthday: '생일', m_nation: '국적', m_blood: '혈액형',
+      awardsH2: '주목과 기록',
+      awardsLabel: 'Awards & Recognition',
+      awardsFilterAll: '전체', awardsFilterDomestic: '국내 수상', awardsFilterAchievement: '국내 성과',
+      awardsFilterOfficial: '국내 위촉', awardsFilterIntl: '해외 선정',
+      awardItems: [
+        { cat: '국내 성과', title: 'Spotify 데일리 바이럴 송즈 한국 1위', note: "'LOVE ATTACK' 라이브 5시간 22분 기록 후 Spotify 데일리 바이럴 한국 1위 — 누적 스트리밍 500만 돌파" },
+        { cat: '국내 수상', title: '2024 아시아모델어워즈 라이징스타상 (가수 부문)', note: '데뷔 후 첫 공식 수상' },
+        { cat: '해외 선정', title: 'Billboard "25 Best K-Pop Albums of 2024"', note: "미니 1집 'SCENEDROME' 24위 선정" },
+        { cat: '해외 선정', title: 'Grammy.com "10 K-Pop Songs That Electrified 2024"', note: "타이틀곡 'LOVE ATTACK' 선정" },
+        { cat: '해외 선정', title: 'Apple Music × Shazam "Shazam Fast Forward 2025"', note: '팝 장르 2025년 주목해야 할 아티스트 10팀 — 한국 그룹 유일 선정' },
+        { cat: '국내 위촉', title: '한국청소년연맹 홍보대사 위촉', note: '공적 활동 위촉' },
+        { cat: '해외 선정', title: 'NME "The NME 100: essential emerging artists for 2025"', note: '신예 아티스트 100인 목록 선정' },
+        { cat: '국내 수상', title: '제7회 뉴시스 한류엑스포 한류특별상', note: "'Deja Vu' & 'LOVE ATTACK' 축하 무대" },
+        { cat: '해외 선정', title: 'NME "The 25 best K-pop songs of 2025"', note: "타이틀곡 'Glow Up' 선정" },
+        { cat: '국내 수상', title: '2026 대한민국 퍼스트브랜드 대상 여자아이돌 (라이징스타)', note: '2026년 이끌어갈 기대되는 부문 수상' },
+      ],
       woni_nation: '대한민국', liv_nation: '대한민국', minami_nation: '일본',
       may_nation: '대한민국', zena_nation: '대한민국',
       woni_blood: 'B형', liv_blood: 'A형', minami_blood: 'O형', may_blood: 'AB형', zena_blood: 'A형',
@@ -1485,7 +1912,22 @@
       membersH2: '5つのシーン',
       discographyH2: '音楽',
       linksH2: '公式チャンネル',
-      m_fullname: '本名', m_birthday: '誕生日', m_nation: '国籍', m_blood: '血液型',
+      awardsH2: '注目と記録',
+      awardsLabel: 'Awards & Recognition',
+      awardsFilterAll: 'すべて', awardsFilterDomestic: '国内受賞', awardsFilterAchievement: '国内実績',
+      awardsFilterOfficial: '国内委嘱', awardsFilterIntl: '海外選定',
+      awardItems: [
+        { cat: '国内実績', title: 'Spotify デイリーバイラルソング 韓国1位', note: "'LOVE ATTACK' 5時間22分のライブ配信後、Spotifyデイリーバイラル韓国1位を獲得 — 累計ストリーミング500万突破" },
+        { cat: '国内受賞', title: '2024 アジアモデルアワーズ ライジングスター賞（歌手部門）', note: 'デビュー後初の公式受賞' },
+        { cat: '海外選定', title: 'Billboard "25 Best K-Pop Albums of 2024"', note: "ミニ1集 'SCENEDROME' 24位選定" },
+        { cat: '海外選定', title: 'Grammy.com "10 K-Pop Songs That Electrified 2024"', note: "タイトル曲 'LOVE ATTACK' 選定" },
+        { cat: '海外選定', title: 'Apple Music × Shazam "Shazam Fast Forward 2025"', note: 'ポップジャンルで2025年注目すべきアーティスト10組 — 韓国グループで唯一選定' },
+        { cat: '国内委嘱', title: '韓国青少年連盟 広報大使委嘱', note: '公的活動への委嘱' },
+        { cat: '海外選定', title: 'NME "The NME 100: essential emerging artists for 2025"', note: '新鋭アーティスト100人リストに選定' },
+        { cat: '国内受賞', title: '第7回ニューシス韓流エクスポ 韓流特別賞', note: "'Deja Vu' & 'LOVE ATTACK' お祝いステージ" },
+        { cat: '海外選定', title: 'NME "The 25 best K-pop songs of 2025"', note: "タイトル曲 'Glow Up' 選定" },
+        { cat: '国内受賞', title: '2026 大韓民国ファーストブランド大賞 女性アイドル（ライジングスター）', note: '2026年を牽引する期待部門受賞' },
+      ],
       woni_nation: '韓国', liv_nation: '韓国', minami_nation: '日本',
       may_nation: '韓国', zena_nation: '韓国',
       woni_blood: 'B型', liv_blood: 'A型', minami_blood: 'O型', may_blood: 'AB型', zena_blood: 'A型',
@@ -1523,7 +1965,22 @@
       membersH2: 'Five Scenes',
       discographyH2: 'Music',
       linksH2: 'Official Channels',
-      m_fullname: 'Full Name', m_birthday: 'Birthday', m_nation: 'Nationality', m_blood: 'Blood Type',
+      awardsH2: 'Milestones & Recognition',
+      awardsLabel: 'Awards & Recognition',
+      awardsFilterAll: 'All', awardsFilterDomestic: 'Domestic Awards', awardsFilterAchievement: 'Achievements',
+      awardsFilterOfficial: 'Appointments', awardsFilterIntl: 'International',
+      awardItems: [
+        { cat: 'Achievement', title: 'Spotify Daily Viral Songs — Korea #1', note: "Reached #1 on Spotify Korea Daily Viral chart after a 5hr 22min 'LOVE ATTACK' live stream — surpassing 5 million cumulative streams" },
+        { cat: 'Domestic Award', title: '2024 Asia Model Awards — Rising Star (Singer)', note: 'First official award since debut' },
+        { cat: 'International', title: 'Billboard "25 Best K-Pop Albums of 2024"', note: "Mini album 'SCENEDROME' ranked #24" },
+        { cat: 'International', title: 'Grammy.com "10 K-Pop Songs That Electrified 2024"', note: "Title track 'LOVE ATTACK' selected" },
+        { cat: 'International', title: 'Apple Music × Shazam "Shazam Fast Forward 2025"', note: '1 of 10 pop artists to watch in 2025 — the only Korean group on the list' },
+        { cat: 'Appointment', title: 'Korea Youth Federation — Goodwill Ambassador', note: 'Officially appointed as public ambassador' },
+        { cat: 'International', title: 'NME "The NME 100: essential emerging artists for 2025"', note: 'Featured in list of 100 essential emerging artists' },
+        { cat: 'Domestic Award', title: '7th Newsis Korean Wave Expo — Korean Wave Special Award', note: "'Deja Vu' & 'LOVE ATTACK' celebratory performance" },
+        { cat: 'International', title: 'NME "The 25 best K-pop songs of 2025"', note: "Title track 'Glow Up' selected" },
+        { cat: 'Domestic Award', title: '2026 Korea First Brand Award — Female Idol Rising Star', note: 'Awarded in the most anticipated artist of 2026 category' },
+      ],
       woni_nation: 'South Korea', liv_nation: 'South Korea', minami_nation: 'Japan',
       may_nation: 'South Korea', zena_nation: 'South Korea',
       woni_blood: 'Type B', liv_blood: 'Type A', minami_blood: 'Type O', may_blood: 'Type AB', zena_blood: 'Type A',
@@ -1585,6 +2042,25 @@
     document.getElementById('members-h2').textContent = t.membersH2;
     document.getElementById('disco-h2').textContent = t.discographyH2;
     document.getElementById('links-h2').textContent = t.linksH2;
+
+    // awards
+    document.getElementById('awards-h2').textContent = t.awardsH2;
+    document.getElementById('awards-label').textContent = t.awardsLabel;
+    document.getElementById('awards-filter-all').textContent = t.awardsFilterAll;
+    document.getElementById('awards-filter-domestic').textContent = t.awardsFilterDomestic;
+    document.getElementById('awards-filter-achievement').textContent = t.awardsFilterAchievement;
+    document.getElementById('awards-filter-official').textContent = t.awardsFilterOfficial;
+    document.getElementById('awards-filter-intl').textContent = t.awardsFilterIntl;
+    if (t.awardItems) {
+      t.awardItems.forEach((item, i) => {
+        const catEl = document.getElementById('award-cat-' + i);
+        const titleEl = document.getElementById('award-title-' + i);
+        const noteEl = document.getElementById('award-note-' + i);
+        if (catEl) catEl.textContent = item.cat;
+        if (titleEl) titleEl.textContent = item.title;
+        if (noteEl) noteEl.textContent = item.note;
+      });
+    }
 
     
     document.querySelectorAll('.mi-fullname').forEach(el => el.textContent = t.m_fullname);
@@ -1681,7 +2157,18 @@
   }, { threshold: 0.1 });
   reveals.forEach(el => revealObserver.observe(el));
 
-  
+  function filterAwards(category, btn) {
+    document.querySelectorAll('.award-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.award-item').forEach(item => {
+      if (category === 'all' || item.dataset.category === category) {
+        item.classList.remove('hidden');
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+  }
+
   const cards = document.querySelectorAll('.member-card');
   const grid = document.querySelector('.members-grid');
   let membersAnimated = false;
@@ -1702,6 +2189,19 @@
 
   if (grid) memberObserver.observe(grid);
   
+  const awardItems = document.querySelectorAll('.award-item');
+  const awardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 60 * Array.from(awardItems).indexOf(entry.target));
+        awardObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  awardItems.forEach(el => awardObserver.observe(el));
+
   const photoMap = {
     woni:   document.getElementById('photo-woni'),
     liv:    document.getElementById('photo-liv'),
@@ -1753,6 +2253,7 @@
     { id: 'sec-about',   navId: 'nav-about' },
     { id: 'sec-members', navId: 'nav-members' },
     { id: 'sec-disco',   navId: 'nav-disco' },
+    { id: 'sec-awards',  navId: 'nav-awards' },
     { id: 'sec-links',   navId: 'nav-links' },
   ];
 
@@ -1777,6 +2278,171 @@
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  setLang(currentLang);
+
+  const ALBUM_DATA = {
+    yoyo: {
+      title: 'YoYo',
+      subtitle: { ko: '프리릴리즈 싱글', ja: 'プレリリースシングル', en: 'Pre-release Single' },
+      type: { ko: 'Pre-release Single', ja: 'Pre-release Single', en: 'Pre-release Single' },
+      date: '2024. 02. 29',
+      ytId: 'uDYy2UyO1X4',
+      tracks: [
+        { name: 'YoYo', isTitle: true },
+      ],
+      mvs: [
+        { label: 'YoYo MV', url: 'https://www.youtube.com/watch?v=uDYy2UyO1X4' },
+      ],
+    },
+    rescene: {
+      title: 'Re:Scene',
+      subtitle: { ko: '싱글 앨범', ja: 'シングルアルバム', en: 'Single Album' },
+      type: { ko: 'Single Album', ja: 'Single Album', en: 'Single Album' },
+      date: '2024. 03. 26',
+      ytId: 'zpSejlkSXLA',
+      tracks: [
+        { name: 'YoYo', isTitle: false },
+        { name: 'UhUh', isTitle: true },
+      ],
+      mvs: [
+        { label: 'UhUh MV', url: 'https://www.youtube.com/watch?v=zpSejlkSXLA' },
+      ],
+    },
+    scenedrome: {
+      title: 'SCENEDROME',
+      subtitle: { ko: '미니 1집', ja: 'ミニアルバム1集', en: '1st Mini Album' },
+      type: { ko: '1st Mini Album', ja: '1st Mini Album', en: '1st Mini Album' },
+      date: '2024. 08. 27',
+      ytId: '9XttLI0oH0I',
+      tracks: [
+        { name: 'Lucky you', isTitle: false },
+        { name: 'LOVE ATTACK', isTitle: true },
+        { name: 'New World', isTitle: false },
+        { name: 'Pinball', isTitle: true },
+      ],
+      mvs: [
+        { label: 'LOVE ATTACK MV', url: 'https://www.youtube.com/watch?v=9XttLI0oH0I' },
+        { label: 'Pinball MV', url: 'https://www.youtube.com/watch?v=wJW9N-WMSRY' },
+      ],
+    },
+    glowup: {
+      title: 'Glow Up',
+      subtitle: { ko: '미니 2집', ja: 'ミニアルバム2集', en: '2nd Mini Album' },
+      type: { ko: '2nd Mini Album', ja: '2nd Mini Album', en: '2nd Mini Album' },
+      date: '2025. 02. 05',
+      ytId: 'h0xUtrb_JBc',
+      tracks: [
+        { name: 'CRASH', isTitle: false },
+        { name: 'Glow Up', isTitle: true },
+        { name: 'Going on', isTitle: false },
+        { name: 'In my lotion', isTitle: false },
+        { name: 'Cotton Candy', isTitle: false },
+      ],
+      mvs: [
+        { label: 'Glow Up MV', url: 'https://www.youtube.com/watch?v=h0xUtrb_JBc' },
+      ],
+    },
+    dearest: {
+      title: 'Dearest',
+      subtitle: { ko: '싱글 2집', ja: 'シングルアルバム2集', en: '2nd Single Album' },
+      type: { ko: '2nd Single Album', ja: '2nd Single Album', en: '2nd Single Album' },
+      date: '2025. 07. 02',
+      ytId: 'ZbO9PBdFRdc',
+      tracks: [
+        { name: 'Deja Vu', isTitle: true },
+        { name: 'Mood', isTitle: false },
+      ],
+      mvs: [
+        { label: 'Deja Vu MV', url: 'https://www.youtube.com/watch?v=ZbO9PBdFRdc' },
+      ],
+    },
+    lipbomb: {
+      title: 'Lip Bomb',
+      subtitle: { ko: '미니 3집', ja: 'ミニアルバム3集', en: '3rd Mini Album' },
+      type: { ko: '3rd Mini Album', ja: '3rd Mini Album', en: '3rd Mini Album' },
+      date: '2025. 11. 25',
+      ytId: 'MC6-82GRK5I',
+      tracks: [
+        { name: 'Heart Drop', isTitle: true },
+        { name: 'Bloom', isTitle: true },
+        { name: 'Love Echo', isTitle: false },
+        { name: 'Hello XO', isTitle: false },
+        { name: 'MVP', isTitle: false },
+      ],
+      mvs: [
+        { label: 'Heart Drop MV', url: 'https://www.youtube.com/watch?v=MC6-82GRK5I' },
+        { label: 'Bloom MV', url: 'https://www.youtube.com/watch?v=3oMC_rCLpAo' },
+      ],
+    },
+    runaway: {
+      title: 'Runaway',
+      subtitle: { ko: '디지털 싱글', ja: 'デジタルシングル', en: 'Digital Single' },
+      type: { ko: 'Digital Single', ja: 'Digital Single', en: 'Digital Single' },
+      date: '2026. 04. 08',
+      ytId: 'rsZwrTNklos',
+      tracks: [
+        { name: 'Runaway', isTitle: true },
+      ],
+      mvs: [
+        { label: 'Runaway MV', url: 'https://www.youtube.com/watch?v=rsZwrTNklos' },
+      ],
+    },
+  };
+
+  const MODAL_LABELS = {
+    ko: { tracklist: 'Track List', titleMark: '타이틀' },
+    ja: { tracklist: 'Track List', titleMark: 'タイトル' },
+    en: { tracklist: 'Track List', titleMark: 'Title' },
+  };
+
+  function openAlbumModal(id) {
+    const data = ALBUM_DATA[id];
+    if (!data) return;
+    const lang = currentLang;
+    const labels = MODAL_LABELS[lang] || MODAL_LABELS.ko;
+
+    const artWrap = document.getElementById('album-modal-art-wrap');
+    artWrap.innerHTML = `<img class="album-modal-art" src="https://img.youtube.com/vi/${data.ytId}/maxresdefault.jpg" alt="${data.title}" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${data.ytId}/hqdefault.jpg'">`;
+
+    document.getElementById('modal-type').textContent = data.type[lang] || data.type.ko;
+    document.getElementById('modal-date').textContent = data.date;
+    document.getElementById('modal-title').textContent = data.title;
+    document.getElementById('modal-subtitle').textContent = data.subtitle[lang] || data.subtitle.ko;
+    document.getElementById('modal-tracks-label').textContent = labels.tracklist;
+
+    const ul = document.getElementById('modal-tracklist');
+    ul.innerHTML = data.tracks.map((t, i) => `
+      <li class="${t.isTitle ? 'is-title' : ''}">
+        <span class="album-modal-track-num">${String(i + 1).padStart(2, '0')}</span>
+        ${t.name}${t.isTitle ? '<span class="title-star">★</span>' : ''}
+      </li>
+    `).join('');
+
+    const actions = document.getElementById('modal-actions');
+    const ytSvg = `<svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>`;
+    actions.innerHTML = data.mvs.map(mv =>
+      `<a class="album-modal-mv-btn" href="${mv.url}" target="_blank">${ytSvg} ${mv.label}</a>`
+    ).join('');
+
+    document.getElementById('album-modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAlbumModal(e) {
+    if (e && e.target !== document.getElementById('album-modal-overlay')) return;
+    document.getElementById('album-modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeAlbumModal(null);
+  });
+
+  document.querySelectorAll('.disco-item').forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') el.click();
+    });
+  });
 </script>
 
 </body>
